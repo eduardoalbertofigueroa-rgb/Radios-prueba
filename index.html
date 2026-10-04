@@ -25,10 +25,10 @@
   const CANALES = [
     { nombre: "TN",        id: "UCj6PcyLvpnIRT_2W_mwa9Aw" },
     { nombre: "C5N",       id: "UCFgk2Q2mVO1BklRQhSv6p0w" },
-    { nombre: "La Nación+ (canal LA NACION)", id: "UCba3hpU7EFBSk817y9qZkiA" },
+    { nombre: "La Nación+", id: "UCba3hpU7EFBSk817y9qZkiA", video: "FEWZjXJ7M0c" },
     { nombre: "Crónica",   id: "UCT7KFGv6s2a-rh2Jq8ZdM1g" },
     { nombre: "A24",       id: "UCR9120YBAqMfntqgRTKmkjQ" },
-    { nombre: "Canal 26",  id: "UCrpMfcQNog595v5gAS-oUsQ" }
+    { nombre: "Canal 26",  id: "UCrpMfcQNog595v5gAS-oUsQ", video: "C_RnFD6xiX8" }
   ];
 
   const lista = document.getElementById("lista");
@@ -41,7 +41,7 @@
       '<a class="link" target="_blank" rel="noopener" href="https://www.youtube.com/channel/' + c.id + '/live">Abrir en YouTube</a>';
     div.querySelector("button").addEventListener("click", () => {
       div.querySelector(".caja").innerHTML =
-        '<iframe src="https://www.youtube.com/embed/live_stream?channel=' + c.id + '"' +
+        '<iframe src="' + (c.video ? 'https://www.youtube.com/embed/' + c.video : 'https://www.youtube.com/embed/live_stream?channel=' + c.id) + '"' +
         ' referrerpolicy="strict-origin-when-cross-origin"' +
         ' allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
     });
