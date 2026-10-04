@@ -1,286 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Junín Conecta - TV y Entretenimiento</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
-    <style>
-      body {
-        font-family: 'Ubuntu', sans-serif;
-        background-color: #000;
-        color: #fff;
-        margin: 0;
-        display: flex;
-        height: 100vh;
-        overflow: hidden;
-      }
-      /* Sidebar */
-      .sidebar {
-        width: 80px;
-        background: #12131a;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 20px 0;
-        border-right: 1px solid #222;
-      }
-      .sidebar .menu-item {
-        font-size: 24px;
-        color: #888;
-        margin: 20px 0;
-        cursor: pointer;
-        transition: color 0.3s;
-      }
-      .sidebar .menu-item.active, .sidebar .menu-item:hover {
-        color: #007bff;
-      }
-      /* Contenido Principal */
-      .content {
-        flex: 1;
-        padding: 30px;
-        overflow-y: auto;
-      }
-      .section {
-        display: none;
-      }
-      .section.active {
-        display: block;
-      }
-      /* Estilos sección Perfil */
-      .profile-container {
-        max-width: 600px;
-        background: #12131a;
-        padding: 20px;
-        border-radius: 8px;
-        display: flex;
-        gap: 20px;
-        align-items: center;
-      }
-      .profile-image img {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 3px solid white;
-        cursor: pointer;
-      }
-      input[type="text"] {
-        padding: 8px;
-        background: #000;
-        border: 1px solid #fff;
-        color: #fff;
-        border-radius: 4px;
-        font-size: 16px;
-      }
-      button {
-        padding: 8px 16px;
-        background: #007bff;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-weight: bold;
-      }
-      button:disabled {
-        background: #444;
-        color: #888;
-        cursor: not-allowed;
-      }
-      /* Selector de imágenes oculto por defecto */
-      #imageSelection {
-        display: none;
-        margin-top: 15px;
-        background: #1a1b24;
-        padding: 10px;
-        border-radius: 5px;
-      }
-      .images-grid {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-      .images-grid img {
-        width: 60px;
-        height: 60px;
-        border-radius: 4px;
-        cursor: pointer;
-        object-fit: cover;
-      }
-      /* Estilos sección TV/Canales */
-      .tv-grid {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 20px;
-        height: 80vh;
-      }
-      .video-box {
-        background: #12131a;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        border-radius: 8px;
-        font-size: 18px;
-        color: #aaa;
-        overflow: hidden;
-        position: relative;
-      }
-      #videoPlayer {
-        width: 100%;
-        height: 100%;
-        background: #000;
-      }
-      .channels-list {
-        background: #12131a;
-        border-radius: 8px;
-        padding: 15px;
-        overflow-y: auto;
-      }
-      .channel-item {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 8px;
-        margin-bottom: 8px;
-        background: #1a1b24;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background 0.2s;
-      }
-      .channel-item:hover {
-        background: #007bff;
-      }
-      .channel-item img {
-        width: 40px;
-        height: 40px;
-        border-radius: 4px;
-        object-fit: cover;
-      }
-    </style>
-  </head>
-  <body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prueba de canales</title>
+<style>
+  body { margin: 0; padding: 16px; background: #0f1f16; color: #fff; font-family: Arial, sans-serif; }
+  h1 { color: #4ade80; font-size: 20px; }
+  .canal { max-width: 640px; margin: 0 0 28px; }
+  h2 { font-size: 16px; margin: 0 0 8px; }
+  .caja { aspect-ratio: 16 / 9; background: #000; display: grid; place-items: center; }
+  iframe { width: 100%; height: 100%; border: 0; }
+  button, a.link { background: #4ade80; color: #000; border: 0; border-radius: 10px; padding: 10px 18px;
+    font-weight: bold; cursor: pointer; text-decoration: none; font-size: 14px; }
+  a.link { display: inline-block; background: #162a1c; color: #fff; margin-top: 8px; }
+</style>
+</head>
+<body>
+<h1>Prueba de canales de noticias</h1>
+<p>Tocá "Probar" en cada canal y fijate si carga en vivo o da error.</p>
+<div id="lista"></div>
 
-    <!-- Menú Lateral -->
-    <aside class="sidebar">
-      <div class="menu-item active" onclick="switchSection('home', event)"><i class="bi bi-house-door"></i></div>
-      <div class="menu-item" onclick="switchSection('tv', event)"><i class="bi bi-tv"></i></div>
-      <div class="menu-item" onclick="switchSection('profile', event)"><i class="bi bi-person-circle"></i></div>
-    </aside>
+<script>
+  const CANALES = [
+    { nombre: "TN",        id: "UCj6PcyLvpnIRT_2W_mwa9Aw" },
+    { nombre: "C5N",       id: "UCFgk2Q2mVO1BklRQhSv6p0w" },
+    { nombre: "La Nación+", id: "UCba3hpU7EFBSk817y9qZkiA", video: "FEWZjXJ7M0c" },
+    { nombre: "Crónica",   id: "UCT7KFGv6s2a-rh2Jq8ZdM1g" },
+    { nombre: "A24",       id: "UCR9120YBAqMfntqgRTKmkjQ" },
+    { nombre: "Canal 26",  id: "UCrpMfcQNog595v5gAS-oUsQ", video: "C_RnFD6xiX8" }
+  ];
 
-    <!-- Contenido -->
-    <main class="content">
-      
-      <!-- Sección Inicio -->
-      <div id="home" class="section active">
-        <h1>Bienvenido a Junín Conecta</h1>
-        <p>Seleccioná una opción en el menú de la izquierda para ver los canales o editar tu perfil.</p>
-      </div>
-
-      <!-- Sección TV / Canales -->
-      <div id="tv" class="section">
-        <h2>Canales Online (Estables)</h2>
-        <div class="tv-grid">
-          <div class="video-box" id="player-view">
-            <!-- Reproductor HTML5 nativo para streams directos -->
-            <video id="videoPlayer" controls autoplay>
-              Tu navegador no soporta la reproducción de video.
-            </video>
-            <div id="placeholder-text" style="position: absolute; pointer-events: none;">Seleccioná un canal para reproducir</div>
-          </div>
-          <div class="channels-list" id="channelList">
-            <!-- Lista de ejemplo con video de prueba estable -->
-            <div class="channel-item" onclick="playStream('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', 'Big Buck Bunny')">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Big_buck_bunny_poster_big.jpg" alt="Prueba" />
-              <span>Canal de Prueba (Video HD)</span>
-            </div>
-            <!-- Acá podés agregar en el futuro más enlaces directos o streams M3U8 -->
-          </div>
-        </div>
-      </div>
-
-      <!-- Sección Perfil -->
-      <div id="profile" class="section">
-        <h2>Editar Perfil</h2>
-        <div class="profile-container">
-          <div class="profile-image">
-            <img id="profileImage" src="https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg" alt="Avatar" onclick="toggleImageSelection()" />
-          </div>
-          <div>
-            <h3>Nombre de Usuario</h3>
-            <input type="text" id="username" placeholder="Tu nombre" maxlength="10" oninput="checkInput()" />
-            <br><br>
-            <button id="okButton" onclick="saveProfile()" disabled>Guardar</button>
-          </div>
-        </div>
-        <div id="imageSelection">
-          <p>Elegí un avatar:</p>
-          <div class="images-grid">
-            <img src="https://i.blogs.es/c937a5/lisapersonajes/840_560.jpeg" onclick="selectAvatar(this)" />
-            <img src="https://lavisionweb.com/wp-content/uploads/2023/03/Jenna-Ortega-3-e1670013587688-1024x752-1.jpg" onclick="selectAvatar(this)" />
-            <img src="https://cinefilosoficial.com/wp-content/uploads/2024/04/fallout-serie-tv-3289518.png" onclick="selectAvatar(this)" />
-          </div>
-        </div>
-      </div>
-
-    </main>
-
-    <script>
-      // Cambio de pestañas fluido
-      function switchSection(sectionId, event) {
-        document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-        document.querySelectorAll('.sidebar .menu-item').forEach(item => item.classList.remove('active'));
-        
-        document.getElementById(sectionId).classList.add('active');
-        event.currentTarget.classList.add('active');
-      }
-
-      // Reproductor de video directo
-      function playStream(videoUrl, displayName) {
-        let placeholder = document.getElementById('placeholder-text');
-        if (placeholder) {
-          placeholder.style.display = 'none';
-        }
-        let player = document.getElementById('videoPlayer');
-        player.src = videoUrl;
-        player.load();
-        player.play().catch(e => console.log("Reproducción automática bloqueada por el navegador:", e));
-      }
-
-      // Lógica de Perfil y LocalStorage
-      window.onload = function() {
-        let saved = localStorage.getItem("userProfile");
-        if (saved) {
-          let data = JSON.parse(saved);
-          document.getElementById("profileImage").src = data.image;
-          document.getElementById("username").value = data.username;
-        }
-      }
-
-      function toggleImageSelection() {
-        let box = document.getElementById("imageSelection");
-        box.style.display = box.style.display === "block" ? "none" : "block";
-      }
-
-      function selectAvatar(imgElement) {
-        document.getElementById("profileImage").src = imgElement.src;
-        document.getElementById("imageSelection").style.display = "none";
-        checkInput();
-      }
-
-      function checkInput() {
-        let val = document.getElementById("username").value.trim();
-        document.getElementById("okButton").disabled = val === "";
-      }
-
-      function saveProfile() {
-        let profile = {
-          username: document.getElementById("username").value,
-          image: document.getElementById("profileImage").src
-        };
-        localStorage.setItem("userProfile", JSON.stringify(profile));
-        alert("¡Perfil guardado con éxito!");
-      }
-    </script>
-  </body>
+  const lista = document.getElementById("lista");
+  CANALES.forEach((c) => {
+    const div = document.createElement("div");
+    div.className = "canal";
+    div.innerHTML =
+      "<h2>" + c.nombre + "</h2>" +
+      '<div class="caja"><button type="button">Probar</button></div>' +
+      '<a class="link" target="_blank" rel="noopener" href="https://www.youtube.com/channel/' + c.id + '/live">Abrir en YouTube</a>';
+    div.querySelector("button").addEventListener("click", () => {
+      div.querySelector(".caja").innerHTML =
+        '<iframe src="' + (c.video ? 'https://www.youtube.com/embed/' + c.video : 'https://www.youtube.com/embed/live_stream?channel=' + c.id) + '"' +
+        ' referrerpolicy="strict-origin-when-cross-origin"' +
+        ' allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
+    });
+    lista.appendChild(div);
+  });
+</script>
+</body>
 </html>
+
